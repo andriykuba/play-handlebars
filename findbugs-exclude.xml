@@ -1,0 +1,5 @@
+<FindBugsFilter>
+    <Match>
+        <Package name="aku.play.handlebars.scala" />
+    </Match>
+</FindBugsFilter>
