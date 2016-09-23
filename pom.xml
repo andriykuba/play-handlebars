@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
     <name>Handlebars templates for Play framework</name>
     <version>2.5.9</version>
-    <description>Handelbars templates based on Java port of handlebars with special Play 2 handlers</description>
+    <description>Handlebars templates based on Java port of handlebars with special Play 2 handlers</description>
     <url>https://github.com/andriykuba/play-handlebars</url>
 
     <issueManagement>
