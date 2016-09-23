@@ -9,10 +9,12 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
     ```scala
     libraryDependencies += "aku.play.handlebars" % "play-handlebars" % "2.5.9" 
     ```
+    
 2. Enable the module in `conf\application.conf`
     ```scala
     play.modules.enabled += "aku.play.handlebars.HandlebarsModule"
     ```
+    
 3. Configure the templates folder and cache (optional)
     ```
     handlebars{
@@ -21,6 +23,7 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
       isCacheEnabled = true      #true by default 
     }
     ```
+    
 4. Configure `build.sbt` to take the templates folder in to the distribution package
     ```scala
     // Copy handlebars templates to the production
