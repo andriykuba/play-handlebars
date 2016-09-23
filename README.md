@@ -5,17 +5,21 @@
 This module is created for using [Handlebars](http://handlebarsjs.com/) templates with Play Framework. It use [Handlebars.java](https://github.com/jknack/handlebars.java) under the hood with an additional resolver for the play JSON objects. Both Scala and Java are supported. 
 
 ## Install
-1. Add the library in `built.sbt`
+1. Clone the repository
+
+2. Go into play-handlebars directory and execute `mvn install`
+
+3. Add the library in `built.sbt`
     ```scala
     libraryDependencies += "aku.play.handlebars" % "play-handlebars" % "2.5.9" 
     ```
     
-2. Enable the module in `conf\application.conf`
+4. Enable the module in `conf\application.conf`
     ```scala
     play.modules.enabled += "aku.play.handlebars.HandlebarsModule"
     ```
     
-3. Configure the templates folder and cache (optional)
+5. Configure the templates folder and cache (optional)
     ```
     handlebars{
       directory = "/templates"   #"/templates" by default
@@ -24,7 +28,7 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
     }
     ```
     
-4. Configure `build.sbt` to take the templates folder in to the distribution package
+6. Configure `build.sbt` to take the templates folder in to the distribution package
     ```scala
     // Copy handlebars templates to the production
     mappings in Universal ++=
