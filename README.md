@@ -149,10 +149,5 @@ def index = Action { implicit request =>{
 }}
 ```
 
-## Scala Json Value Resolver
- - JsString
- - JsNumber
- - JsBoolean
- - JsObject
- - JsArray
- - JsNull
+### Scala Json Value Resolver
+It works similar to `JsonNodeValueResolver` but resolve the classes from the `play.api.libs.json` package 
