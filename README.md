@@ -64,28 +64,28 @@ public class HomeController extends Controller {
 ```
 
 ### Scala
-  Inject `HandlebarsApi` into controller with trait `HandlebarsSupport` and call `render(templateName, data)` method.
+Inject `HandlebarsApi` into controller with trait `HandlebarsSupport` and call `render(templateName, data)` method.
     
-    ```scala
-      class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Controller with HandlebarsSupport{
-        def index = Action { implicit request =>{
-          val jsonData = 
-            Json.obj("users" -> Json.arr(
-              Json.obj(
-                "name" -> "Jhon",
-                "age" -> 4,
-                "role" -> "Worker"
-              ),
-              Json.obj(
-                "name" -> "Duck",
-                "age" -> 6,
-                "role" -> "Administrator"
-              )))
-          val page = render("page", jsonData)
-          Ok(page)
-        }}
-      }
-    ```
+```scala
+class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Controller with HandlebarsSupport{
+  def index = Action { implicit request =>{
+    val jsonData = 
+      Json.obj("users" -> Json.arr(
+        Json.obj(
+          "name" -> "Jhon",
+          "age" -> 4,
+          "role" -> "Worker"
+        ),
+        Json.obj(
+          "name" -> "Duck",
+          "age" -> 6,
+          "role" -> "Administrator"
+        )))
+    val page = render("page", jsonData)
+    Ok(page)
+  }}
+}
+```
 
  
 ## Helpers
