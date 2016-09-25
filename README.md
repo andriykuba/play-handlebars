@@ -38,6 +38,30 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 
 ## Usage 
  - Java
+  Inject `HandlebarsApi` into controller and call `handlebarsApi.html(templateName, data)` method. 
+ 
+   ```java
+   public class HomeController extends Controller { 
+   
+     @Inject
+     private HandlebarsApi handlebarsApi;
+   
+      public Result index() {
+        // The data. 
+        final Map<String, Object> data = new HashMap<>();
+        data.put("title", "Page Title");
+        data.put("header", "Header");
+        data.put("main", ImmutableMap.of("article", "Main Article"));
+        data.put("footer", "Footer");
+
+        // Fill it with data.
+        final Content page = handlebarsApi.html("page", data);
+
+        // Return the page to the client.
+        return ok(page);
+      }
+    }
+    ```
  - Scala
  
 ## Helpers
