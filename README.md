@@ -96,7 +96,7 @@ class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Control
 <link rel="stylesheet" media="screen" href="{{asset "stylesheets/main.css"}}">
 ```
 
-Resulting HTML will be
+Resulting HTML:
 ```html
 <link rel="stylesheet" media="screen" href="/assets/stylesheets/d41d8cd98f00b204e9800998ecf8427e-main.css">
 ```
@@ -106,18 +106,34 @@ Do not forget to configure versioning in the build file
 
 
 ### Reverse routing
-`route` helper is teh replacement for the twirl reverse routing "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;" 
+`route` helper is the replacement for the twirl reverse routing "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;" 
 
 ```html
 <form action="{{route "controllers.SecureController.loginSubmit"}}" method="POST">
 ```
 
-Resulting HTML will be
+Resulting HTML:
 ```html
 <form action="\login" method="POST">
 ```
 
-### @Message(key)
+### Message
+`message` helper is the replacement for the twirl `@Message(key)` method. It also coul take arguments like the original method.
+
+```html
+<div>{{message "page.header.sub" "name"}}</div>
+```
+
+In the `messages.en` file
+ 
+```
+page.header.sub=Page Sub Header {0}
+```
+
+Resulting HTML:
+```html
+<div>Page Sub Header name</div>
+```
 ### i18n
  
 ## Scala Json Value Resolver
