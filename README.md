@@ -37,32 +37,55 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
     ```
 
 ## Usage 
- - Java
+### Java
   Inject `HandlebarsApi` into controller and call `handlebarsApi.html(templateName, data)` method. 
  
-   ```java
-   public class HomeController extends Controller { 
+    ```java
+    public class HomeController extends Controller { 
    
-     @Inject
-     private HandlebarsApi handlebarsApi;
+        @Inject
+        private HandlebarsApi handlebarsApi;
    
-      public Result index() {
-        // The data. 
-        final Map<String, Object> data = new HashMap<>();
-        data.put("title", "Page Title");
-        data.put("header", "Header");
-        data.put("main", ImmutableMap.of("article", "Main Article"));
-        data.put("footer", "Footer");
+        public Result index() {
+            // Data. 
+            final Map<String, Object> data = new HashMap<>();
+            data.put("title", "Page Title");
+            data.put("header", "Header");
+            data.put("main", ImmutableMap.of("article", "Main Article"));
+            data.put("footer", "Footer");
 
-        // Fill it with data.
-        final Content page = handlebarsApi.html("page", data);
+            // Fill it with the data.
+            final Content page = handlebarsApi.html("page", data);
 
-        // Return the page to the client.
-        return ok(page);
-      }
+            // Return the page to the client. 
+            return ok(page);
+        }
     }
     ```
- - Scala
+### Scala
+  Inject `HandlebarsApi` into controller with trait `HandlebarsSupport` and call `render(templateName, data)` method.
+    
+    ```scala
+      class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Controller with HandlebarsSupport{
+        def index = Action { implicit request =>{
+          val jsonData = 
+            Json.obj("users" -> Json.arr(
+              Json.obj(
+                "name" -> "Jhon",
+                "age" -> 4,
+                "role" -> "Worker"
+              ),
+              Json.obj(
+                "name" -> "Duck",
+                "age" -> 6,
+                "role" -> "Administrator"
+              )))
+          val page = render("page", jsonData)
+          Ok(page)
+        }}
+      }
+    ```
+
  
 ## Helpers
  - @routes.Assets.versioned
