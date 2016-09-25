@@ -55,7 +55,7 @@ public class HomeController extends Controller {
         data.put("footer", "Footer");
 
         // Fill it with the data.
-        final Content page = handlebarsApi.html("page", data);
+        final Content page = handlebarsApi.html("page", data, Context.current().lang().code());
 
         // Return the page to the client. 
         return ok(page);
@@ -135,7 +135,20 @@ Resulting HTML:
 <div>Page Sub Header name</div>
 ```
 ### i18n
- 
+`messages` helper use the language that was passed to the `render` or `html` method as a language code string. This code combine in to the `handlebars` context as a `language` variable, so it can be used in template.
+
+```html
+<html lang="{{language}}">
+``` 
+
+In `scala` the `HandlebarsSupport` trait takes the language code from the implicit `Lang` variable. The implicit `request2lang` method of the Play Framework `Controller` class convert `RequestHeader` to the `Lang`. So, if you need the i18n support in the applications, you need to call your code with the implicit `request`. The example:
+
+```scala
+def index = Action { implicit request =>{
+   // Your code, like render("page", jsonData), or any other that use Lang object
+}}
+```
+
 ## Scala Json Value Resolver
  - JsString
  - JsNumber
