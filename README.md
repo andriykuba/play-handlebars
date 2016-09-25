@@ -89,10 +89,25 @@ class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Control
 
  
 ## Helpers
- - @routes.Assets.versioned
- - reverse routing, i.e. "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;"
- - @Message(key)
- - i18n
+### Assets
+Twirl `@routes.Assets.versioned` method could be replaced by the `assets` helper:
+
+```html
+<link rel="stylesheet" media="screen" href="{{asset "stylesheets/main.css"}}">
+```
+
+Resulting HTML will be
+```html
+<link rel="stylesheet" media="screen" href="/assets/stylesheets/d41d8cd98f00b204e9800998ecf8427e-main.css">
+```
+
+Do not forget to configure versioning in the build file
+`pipelineStages := Seq(digest)` for the production and `pipelineStages in Assets := Seq(digest)` for the development.
+
+
+### reverse routing, i.e. "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;"
+### @Message(key)
+### i18n
  
 ## Scala Json Value Resolver
  - JsString
