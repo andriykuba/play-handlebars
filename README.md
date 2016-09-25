@@ -4,6 +4,17 @@
 
 This module is created for using [Handlebars](http://handlebarsjs.com/) templates with Play Framework. It use [Handlebars.java](https://github.com/jknack/handlebars.java) under the hood with an additional resolver for the play JSON objects. Both Scala and Java are supported. 
 
+- [Install](#install)
+- [Usage](#usage)
+  - [Java](#java)
+  - [Scala](#scala)
+- [Helpers](#helpers)
+  - [Assets](#assets)
+  - [Reverse routing](#reverse-routing)
+  - [Message](#message)
+  - [i18n](#i18n)
+  - [Scala Json Value Resolver](#scala-json-value-resolver) 
+
 ## Install
 1. Clone the repository
 
