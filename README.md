@@ -90,7 +90,7 @@ class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Control
  
 ## Helpers
 ### Assets
-Twirl `@routes.Assets.versioned` method could be replaced by the `assets` helper:
+`assets` helper is the replacement for the twirl `@routes.Assets.versioned` method.
 
 ```html
 <link rel="stylesheet" media="screen" href="{{asset "stylesheets/main.css"}}">
@@ -105,7 +105,18 @@ Do not forget to configure versioning in the build file
 `pipelineStages := Seq(digest)` for the production and `pipelineStages in Assets := Seq(digest)` for the development.
 
 
-### reverse routing, i.e. "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;"
+### Reverse routing
+`route` helper is teh replacement for the twirl reverse routing "&lt;full-package-name&gt;.routes.&lt;controller&gt;.&lt;action&gt;" 
+
+```html
+<form action="{{route "controllers.SecureController.loginSubmit"}}" method="POST">
+```
+
+Resulting HTML will be
+```html
+<form action="\login" method="POST">
+```
+
 ### @Message(key)
 ### i18n
  
