@@ -6,8 +6,8 @@
     <artifactId>play-handlebars</artifactId>
     <packaging>jar</packaging>
     <name>Handlebars templates for Play framework</name>
-    <version>2.5.9</version>
-    <description>Handlebars templates based on Java port of handlebars with special Play 2 handlers</description>
+    <version>2.5.1</version>
+    <description>Handlebars templates based on Java port of handlebars with special handlers for the Play Framework</description>
     <url>https://github.com/andriykuba/play-handlebars</url>
 
     <issueManagement>
@@ -19,7 +19,6 @@
       <license>
         <name>MIT License</name>
         <url>http://www.opensource.org/licenses/mit-license.php</url>
-        <distribution>repo</distribution>
       </license>
     </licenses>
 
@@ -43,17 +42,6 @@
             <id>typesafe</id>
             <name>typesafe-releases</name>
             <url>http://repo.typesafe.com/typesafe/releases</url>
-        </repository>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-              <enabled>false</enabled>
-            </releases>
-            <snapshots>
-              <enabled>true</enabled>
-            </snapshots>
         </repository>
     </repositories>
     
