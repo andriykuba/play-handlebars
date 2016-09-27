@@ -17,21 +17,18 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
   - [Scala Json Value Resolver](#scala-json-value-resolver) 
 
 ## Install
-1. Clone the repository
 
-2. Go into play-handlebars directory and execute `mvn install`
-
-3. Add the library in `built.sbt`
+1. Add the library in `built.sbt`
     ```scala
     libraryDependencies += "com.github.andriykuba.play.handlebars" % "play-handlebars" % "2.5.1" 
     ```
     
-4. Enable the module in `conf\application.conf`
+2. Enable the module in `conf\application.conf`
     ```scala
     play.modules.enabled += "com.github.andriykuba.play.handlebars.HandlebarsModule"
     ```
     
-5. Configure the templates folder and cache (optional)
+3. Configure the templates folder and cache (optional)
     ```
     handlebars{
       directory = "/templates"   #"/templates" by default
