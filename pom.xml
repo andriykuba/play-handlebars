@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andriykuba</groupId>
-    <artifactId>play.handlebars</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>play-handlebars</artifactId>
+    <packaging>jar</packaging>
     <name>Handlebars templates for Play framework</name>
     <version>2.5.1</version>
     <description>Handlebars templates based on Java port of handlebars with special handlers for the Play Framework</description>
