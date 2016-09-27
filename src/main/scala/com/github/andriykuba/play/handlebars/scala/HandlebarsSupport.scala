@@ -1,6 +1,6 @@
-package aku.play.handlebars.scala
+package com.github.andriykuba.play.handlebars.scala
 
-import aku.play.handlebars.HandlebarsApi
+import com.github.andriykuba.play.handlebars.HandlebarsApi
 import play.api.i18n.Lang
 import play.twirl.api.Content
 import play.api.http.Writeable

@@ -1,4 +1,4 @@
-package aku.play.handlebars;
+package com.github.andriykuba.play.handlebars;
 
 import static org.junit.Assert.assertEquals;
 

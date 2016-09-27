@@ -23,12 +23,12 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 
 3. Add the library in `built.sbt`
     ```scala
-    libraryDependencies += "aku.play.handlebars" % "play-handlebars" % "2.5.1" 
+    libraryDependencies += "com.github.andriykuba.play.handlebars" % "play-handlebars" % "2.5.1" 
     ```
     
 4. Enable the module in `conf\application.conf`
     ```scala
-    play.modules.enabled += "aku.play.handlebars.HandlebarsModule"
+    play.modules.enabled += "com.github.andriykuba.play.handlebars.HandlebarsModule"
     ```
     
 5. Configure the templates folder and cache (optional)

@@ -1,4 +1,4 @@
-package aku.play.handlebars;
+package com.github.andriykuba.play.handlebars;
 
 import java.util.AbstractMap;
 import java.util.Collections;
