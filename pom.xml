@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>aku.play.handlebars</groupId>
-    <artifactId>play-handlebars</artifactId>
-    <packaging>jar</packaging>
+    <groupId>com.github.andriykuba</groupId>
+    <artifactId>play.handlebars</artifactId>
+    <packaging>pom</packaging>
     <name>Handlebars templates for Play framework</name>
     <version>2.5.1</version>
     <description>Handlebars templates based on Java port of handlebars with special handlers for the Play Framework</description>

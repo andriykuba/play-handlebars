@@ -1,11 +1,11 @@
-package aku.play.handlebars.scala
+package com.github.andriykuba.play.handlebars.scala
 
 import collection.mutable.Stack
 import org.scalatest._
 import play.Configuration
 import play.i18n.MessagesApi
 import org.mockito.Mockito._
-import aku.play.handlebars.HandlebarsApi
+import com.github.andriykuba.play.handlebars.HandlebarsApi
 import org.scalatest.mockito.MockitoSugar
 import java.util.HashMap
 import play.api.libs.json.Json
