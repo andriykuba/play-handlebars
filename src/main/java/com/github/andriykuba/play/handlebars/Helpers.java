@@ -232,7 +232,7 @@ public final class Helpers {
       if (argument.startsWith("\"") && argument.endsWith("\"")) {
         // The string argument
         types.add(String.class);
-        values.add(argument.substring(1, argument.length() - 2));
+        values.add(argument.substring(1, argument.length() - 1));
       } else {
         try {
           // The integer argument
