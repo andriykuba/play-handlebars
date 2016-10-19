@@ -56,6 +56,15 @@ class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with Mock
     result should be ("123")
   }
   
+  it should "access the play json array element by an index, string values" in {
+    val template = "{{array.[0]}}{{array.[1]}}{{array.[2]}}"
+    val data = Json.obj("array" -> Json.arr("1","2","3"))
+    
+    val result = api.renderInline(template, data, languageCode)
+    
+    result should be ("123")
+  }
+    
   it should "iterate by elements of the play json array" in {
     val template = "{{#array}}{{this}}{{/array}}"
     val data = Json.obj("array" -> Json.arr(1,2,3))
@@ -64,7 +73,7 @@ class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with Mock
     
     result should be ("123")
   }
-  
+    
   it should "works with the \"each\" helper for the  play json array" in {
     val template = "{{#each array}}{{this}}{{/each}}"
     val data = Json.obj("array" -> Json.arr(1,2,3))

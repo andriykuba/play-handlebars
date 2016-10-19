@@ -1,6 +1,7 @@
 package com.github.andriykuba.play.handlebars;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -29,10 +30,10 @@ public enum ScalaJsonValueResolver implements ValueResolver{
 	public Set<Map.Entry<String, Object>> propertySet(final Object context) {
 		if(context instanceof JsArray){
 			final Map<String, Object> result = new LinkedHashMap<String, Object>();
-			final List<JsValue> list = toJavaList((JsArray) context);
+			final List<Object> list = toJavaList((JsArray) context);
 			
 			int i = 0;
-			for (JsValue value : list){
+			for (Object value : list){
 				result.put(Integer.toString(i++), resolve(value));
 			}
 
@@ -155,8 +156,13 @@ public enum ScalaJsonValueResolver implements ValueResolver{
 	    };
 	 }
 	 
-	 private static List<JsValue> toJavaList(final JsArray array){
+	 private List<Object> toJavaList(final JsArray array){
 		 final scala.collection.Seq<JsValue> seq = array.value();
-		 return scala.collection.JavaConversions.seqAsJavaList(seq);
+		 final List<JsValue> converted = scala.collection.JavaConversions.seqAsJavaList(seq);
+		 final List<Object> result = new ArrayList<>();
+		 for(JsValue val:converted){
+			 result.add(resolve(val));
+		 }
+		 return result;
 	 }
 }
