@@ -127,7 +127,7 @@ Resulting HTML:
 ```
 
 ### Message
-`message` helper is the replacement for the twirl `@Message(key)` method. It also coul take arguments like the original method.
+`message` helper is the replacement for the twirl `@Message(key)` method. It also could take arguments like the original method.
 
 ```html
 <div>{{message "page.header.sub" "name"}}</div>
@@ -156,6 +156,18 @@ In `scala` the `HandlebarsSupport` trait takes the language code from the implic
 def index = Action { implicit request =>{
    // Your code, like render("page", jsonData), or any other that use Lang object
 }}
+```
+
+### Encode Url Parameter
+`encodeUrlParameter` encode the string that it could be used as URL parameter. It use `java.net.URLEncoder.encode` under the hood.
+
+```html
+<a href="https://www.google.com?q={{encodeUrlParameter "blue+light blue"}}">search</a>
+```
+
+Resulting HTML:
+```html
+<a href="https://www.google.com?q=blue%2Blight+blue">search</a>
 ```
 
 ### Scala Json Value Resolver

@@ -2,6 +2,7 @@ package com.github.andriykuba.play.handlebars;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -305,5 +306,19 @@ public final class Helpers {
 	Lang lang = Lang.forCode(languageCode);
 	// Retrieve the message, internally formatted by MessageFormat.
     return messagesApi.get(lang, key.toString(), options.params);
+  }
+  
+  /**
+   * Encode the given string so it could be used in the URL as parameter.
+   * There is {@link java.net.URLEncoder#encode java.net.URLEncoder.encode} under the hood.
+   * 
+   * @param parameter
+   * 	string that will be encoded.
+   * @return
+   * 	encoded string.  
+   * @throws Exception
+   */
+  public CharSequence encodeUrlParameter(final Object parameter) throws Exception{
+	  return URLEncoder.encode(parameter.toString(), "UTF-8");
   }
 }
