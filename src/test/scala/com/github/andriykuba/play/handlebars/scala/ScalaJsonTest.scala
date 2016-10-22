@@ -47,6 +47,15 @@ class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with Mock
     result should be ("the value is: string value")
   }
   
+  it should "return empty string for en empty json object" in {
+    val template = "the value is: {{key}}"
+    val data = Json.obj()
+    
+    val result = api.renderInline(template, data, languageCode)
+    
+    result should be ("the value is: ")
+  }
+  
   it should "access the play json array element by an index" in {
     val template = "{{array.[0]}}{{array.[1]}}{{array.[2]}}"
     val data = Json.obj("array" -> Json.arr(1,2,3))
