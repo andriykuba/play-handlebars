@@ -126,6 +126,15 @@ Resulting HTML:
 <form action="\login" method="POST">
 ```
 
+`route` helper also works with the String, Integer or variable:
+ ```html
+{{route "controllers.UserController.user(\"admin\")"}}
+
+{{route "controllers.UserListController.page(42)"}}
+
+{{route "controllers.FriendsController.friends(user.name)"}}
+```
+
 ### Message
 `message` helper is the replacement for the twirl `@Message(key)` method. It also could take arguments like the original method.
 
