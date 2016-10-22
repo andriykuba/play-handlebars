@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -110,13 +111,16 @@ public final class Helpers {
    *	Action, like {@code <full-package-name>.<controller>.<action>}.
    *    Only {@link String} and {@link Integer} action arguments type are
    *    supported. String must not contain a comma symbol, like ",".
+   * @param options
+   * 	Object for getting context to resolve handlebar variables in method signature.
    * @return 
    * 	URL that correspond to the action
    * @throws Exception
    * 	any exception in the cache
    */
-  public CharSequence route(final String action) throws Exception {
-    return reverseRoutingCache.get(action);
+  public CharSequence route(final String action, final Options options) throws Exception {
+	String actionReolved = resolveContextVariables(action.trim(), options.context);
+    return reverseRoutingCache.get(actionReolved);
   }
 
   /**
@@ -128,27 +132,25 @@ public final class Helpers {
    */
   private static CharSequence loadRoute(final String action) throws Exception {
     // Trim the string to avoid nasty space mistakes.
-    final String trimmedAction = action.trim();
-
+    final int signatureStart = action.indexOf("(");
+    final String actionWithoutArguments = 
+    		(signatureStart > 0 ? action.substring(0, signatureStart) : action).trim();
+    		
     // Divide the method call from the class path.
-    final String[] methodSplitment = splitStringByLastDot(trimmedAction);
-    final String methodCallSignature = methodSplitment[1];
+    final String[] methodSplitment = splitStringByLastDot(actionWithoutArguments);
+    final String methodName = methodSplitment[1];
 
     // Divide the class from the path.
     final String[] classSplitment = splitStringByLastDot(methodSplitment[0]);
 
     // Get the method and its arguments
-    String methodName;
     RouteMethodArguments methodArguments;
-    final int point = methodCallSignature.indexOf("(");
-    if (point > 0) {
+    if (signatureStart > 0) {
       // Possible arguments are present.
-      final String parametersString = methodCallSignature.substring(point + 1, methodCallSignature.lastIndexOf(")"));
+      final String parametersString = action.substring(signatureStart + 1, action.lastIndexOf(")"));
       methodArguments = parseMethodArguments(parametersString);
-      methodName = methodCallSignature.substring(0, point).trim();
     } else {
       methodArguments = new RouteMethodArguments(null, null);
-      methodName = methodCallSignature;
     }
 
     // Return the action URL
@@ -206,6 +208,8 @@ public final class Helpers {
    * 
    * @param argumentsString
    * 	The method arguments as string
+ * @param context 
+ * @param context 
    * @return
    * 	Parsed route arguments
    */
@@ -222,7 +226,7 @@ public final class Helpers {
 
     for (int i = 0; i < arguments.length; i++) {
       // Normalize argument
-      String argument = arguments[0].trim();
+      String argument = arguments[i].trim();
 
       if (argument.length() == 0) {
         // Empty argument is not allowed
@@ -236,12 +240,12 @@ public final class Helpers {
         values.add(argument.substring(1, argument.length() - 1));
       } else {
         try {
-          // The integer argument
+          // Try the integer argument
           Integer valueInteger = Integer.parseInt(argument);
           types.add(Integer.class);
           values.add(valueInteger);
         } catch (NumberFormatException e) {
-          throw new RuntimeException("Unsupported argument format. Only String and Integer are supported", e);
+            throw new RuntimeException("Unsupported argument format. Only String and Integer are supported", e);
         }
       }
     }
@@ -249,6 +253,46 @@ public final class Helpers {
     return new RouteMethodArguments(
         types.toArray(new Class[types.size()]),
         values.toArray(new Object[values.size()]));
+  }
+  
+  /**
+   * Replace the action arguments with the correspondence context variables.
+   *
+   * @param action
+   * 	action to process.
+   * @param context
+   * 	handlebars context.
+   * @return
+   * 	action with replaced arguments (if needed)
+   */
+  private static String resolveContextVariables(final String action, final Context context){
+  	// Take the variable from the context
+	  final int start = action.indexOf("(");
+	  if(start < 0) return action;
+	  
+	  final int end = action.lastIndexOf(")");
+	  final String argumentsString = action.substring(start + 1, end);
+	  final String actionPath = action.substring(0, start);
+	  
+	  final String[] arguments = argumentsString.split(",");
+	  for (int i = 0; i < arguments.length; i++) {
+	      // Normalize argument
+	      String argument = arguments[i].trim();
+	      if (!argument.startsWith("\"") || !argument.endsWith("\"")) {
+	          try {
+	            // Check if argument is integer
+	            Integer.parseInt(argument);
+	          } catch (NumberFormatException e) {
+	        	Object value = context.get(argument);
+	        	if(value instanceof Integer){
+	        		arguments[i] = value.toString();
+	        	}else{
+	        		arguments[i] = "\"" + value.toString() + "\"";
+	        	}
+	          }
+	        }
+	  }
+	  return actionPath + "(" + String.join(",", arguments) + ")";
   }
 
   /**
@@ -317,6 +361,7 @@ public final class Helpers {
    * @return
    * 	encoded string.  
    * @throws Exception
+   * 	exception in the case of unable to encode.
    */
   public CharSequence encodeUrlParameter(final Object parameter) throws Exception{
 	  return URLEncoder.encode(parameter.toString(), "UTF-8");
