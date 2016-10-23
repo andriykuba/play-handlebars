@@ -364,6 +364,7 @@ public final class Helpers {
    * 	exception in the case of unable to encode.
    */
   public CharSequence encodeUrlParameter(final Object parameter) throws Exception{
+	  if(parameter == null) return "";
 	  return URLEncoder.encode(parameter.toString(), "UTF-8");
   }
 }
