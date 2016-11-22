@@ -28,12 +28,19 @@ public final class StringHelpers {
    * Returns value if obj1 and obj2 are equals
    * 
    * @param obj1
+   * 	Object pretend to be a string.
    * @param obj2
+   * 	Object pretend to be a string.
    * @param value
+   * 	String representation of this object would be returned if {@code obj1} equals {@code obj2}
    * @return
+   * 	{@code value} as string or an empty string.
    * @throws Exception
    */
   public CharSequence if_equals(final Object obj1, final Object obj2, final Object value) throws Exception{
+    if(obj1 == null) {
+    	return obj2 == null ? value.toString() : "";
+    } 
     return obj1.equals(obj2) ? value.toString() : "";
   }
 }
