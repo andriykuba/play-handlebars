@@ -93,4 +93,22 @@ public class HandlebarsApiTest {
 
  		assertEquals("Petro", result);
 	}
+	
+	@Test
+	public void ifEqualsTrue(){
+		String template = "{{if_equals values.first values.second \"Petro\"}}";
+		
+		JsValue data = Json.parse("{\"values\":{\"first\":\"A\", \"second\":\"A\"}}");
+		String result = api.renderInline(template, data, LANGUAGE_CODE);
+		assertEquals("Petro", result);
+	}
+	
+	@Test
+	public void ifEqualsFalse(){
+		String template = "{{if_equals values.first values.second \"Petro\"}}";
+		
+		JsValue data = Json.parse("{\"values\":{\"first\":\"A\", \"second\":\"B\"}}");
+		String result = api.renderInline(template, data, LANGUAGE_CODE);
+		assertEquals("", result);
+	}
 }

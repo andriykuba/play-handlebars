@@ -19,7 +19,7 @@ public final class StringHelpers {
    * @throws Exception
    * 	exception in the case of unable to encode.
    */
-  public CharSequence encodeUrlParameter(final Object parameter) throws Exception{
+  public static CharSequence encodeUrlParameter(final Object parameter) throws Exception{
     if(parameter == null) return "";
     return URLEncoder.encode(parameter.toString(), "UTF-8");
   }
@@ -36,7 +36,7 @@ public final class StringHelpers {
    * @return
    * 	{@code value} as string or an empty string.
    */
-  public CharSequence if_equals(final Object obj1, final Object obj2, final Object value){
+  public static CharSequence if_equals(final Object obj1, final Object obj2, final Object value){
     if(obj1 == null) {
     	return obj2 == null ? value.toString() : "";
     } 
