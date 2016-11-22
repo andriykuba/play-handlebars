@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.github.andriykuba.play.handlebars.helpers.PlayHelpers;
+import com.github.andriykuba.play.handlebars.helpers.StringHelpers;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
@@ -83,14 +85,19 @@ public class HandlebarsApi {
 			handlebars.with(guavaCache);
 		}
 
-		// Add helpers. MessagesApi is a singleton so we can use it in the
-		// helpers.
-		Helpers helpers = new Helpers(messagesApi);
+		// Add helpers. 
+		// MessagesApi is a singleton so we can use it in helpers.
+		PlayHelpers helpers = new PlayHelpers(messagesApi);
 		handlebars.registerHelpers(helpers);
+		handlebars.registerHelpers(StringHelpers.class);
 	}
 
 	public MessagesApi getMessagesApi() {
 		return messagesApi;
+	}
+	
+	public Handlebars getHandlebars(){
+		return handlebars;
 	}
 
 	/**

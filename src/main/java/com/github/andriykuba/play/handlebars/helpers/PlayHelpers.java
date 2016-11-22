@@ -1,11 +1,11 @@
-package com.github.andriykuba.play.handlebars;
+package com.github.andriykuba.play.handlebars.helpers;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.andriykuba.play.handlebars.HandlebarsApi;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
 import com.google.common.cache.CacheBuilder;
@@ -21,7 +21,7 @@ import play.mvc.Call;
  * Helpers specific for the Play.
  *
  */
-public final class Helpers {
+public final class PlayHelpers {
 
   // Guava cache is a thread-safe so we can use it here with no doubt.
   final LoadingCache<String, CharSequence> reverseRoutingCache;
@@ -35,14 +35,14 @@ public final class Helpers {
    * @param messagesApi
    * 	MessagesApi, used in the message helpers
    */
-  public Helpers(final MessagesApi messagesApi) {
+  public PlayHelpers(final MessagesApi messagesApi) {
     this.messagesApi = messagesApi;
 
     // Initialize the reverse router cache.
     reverseRoutingCache = CacheBuilder.newBuilder().build(
         new CacheLoader<String, CharSequence>() {
           public CharSequence load(String key) throws Exception {
-            return Helpers.loadRoute(key);
+            return PlayHelpers.loadRoute(key);
           }
         });
     
@@ -50,7 +50,7 @@ public final class Helpers {
     assetsRoutingCache = CacheBuilder.newBuilder().build(
         new CacheLoader<String, CharSequence>() {
           public CharSequence load(String key) throws Exception {
-            return Helpers.loadAsset(key);
+            return PlayHelpers.loadAsset(key);
           }
         });
   }
@@ -351,20 +351,5 @@ public final class Helpers {
 	// Retrieve the message, internally formatted by MessageFormat.
     return messagesApi.get(lang, key.toString(), options.params);
   }
-  
-  /**
-   * Encode the given string so it could be used in the URL as parameter.
-   * There is {@link java.net.URLEncoder#encode java.net.URLEncoder.encode} under the hood.
-   * 
-   * @param parameter
-   * 	string that will be encoded.
-   * @return
-   * 	encoded string.  
-   * @throws Exception
-   * 	exception in the case of unable to encode.
-   */
-  public CharSequence encodeUrlParameter(final Object parameter) throws Exception{
-	  if(parameter == null) return "";
-	  return URLEncoder.encode(parameter.toString(), "UTF-8");
-  }
+
 }
