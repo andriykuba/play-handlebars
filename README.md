@@ -15,7 +15,9 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
   - [Message](#message)
   - [i18n](#i18n)
 - [String Helpers](#string-helpers)  
-  - [Scala Json Value Resolver](#scala-json-value-resolver) 
+  - [Encode url parameter](#encode-url-parameter)
+  - [If equals](#if-equals)
+- [Scala Json Value Resolver](#scala-json-value-resolver) 
 
 ## Install
 
@@ -168,7 +170,7 @@ def index = Action { implicit request =>{
 }}
 ```
 ## String helpers
-### Encode Url Parameter
+### Encode url parameter
 `encodeUrlParameter` encode the string that it could be used as URL parameter. It use `java.net.URLEncoder.encode` under the hood.
 
 ```html
@@ -180,7 +182,7 @@ Resulting HTML:
 <a href="https://www.google.com?q=blue%2Blight+blue">search</a>
 ```
 
-### If Equals
+### If equals
 `if_equals` compare two objects and return the value if they are equal. 
 ```html
 <ul>
@@ -199,5 +201,5 @@ Resulting HTML:
 </ul>
 ```
 
-### Scala Json Value Resolver
+## Scala Json Value Resolver
 It works similar to `JsonNodeValueResolver` but resolve the classes from the `play.api.libs.json` package 
