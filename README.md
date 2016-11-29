@@ -9,18 +9,19 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 - [Usage](#usage)
   - [Java](#java)
   - [Scala](#scala)
-- [Helpers](#helpers)
+- [Play Helpers](#play-helpers)
   - [Assets](#assets)
   - [Reverse routing](#reverse-routing)
   - [Message](#message)
   - [i18n](#i18n)
+- [String Helpers](#string-helpers)  
   - [Scala Json Value Resolver](#scala-json-value-resolver) 
 
 ## Install
 
 1. Add the library in `built.sbt`
     ```scala
-    libraryDependencies += "com.github.andriykuba.play.handlebars" % "play-handlebars" % "2.5.6" 
+    libraryDependencies += "com.github.andriykuba.play.handlebars" % "play-handlebars" % "2.5.8" 
     ```
     
 2. Enable the module in `conf\application.conf`
@@ -97,7 +98,7 @@ class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Control
 ```
 
  
-## Helpers
+## Play helpers
 ### Assets
 `assets` helper is the replacement for the twirl `@routes.Assets.versioned` method.
 
@@ -166,7 +167,7 @@ def index = Action { implicit request =>{
    // Your code, like render("page", jsonData), or any other that use Lang object
 }}
 ```
-
+## String helpers
 ### Encode Url Parameter
 `encodeUrlParameter` encode the string that it could be used as URL parameter. It use `java.net.URLEncoder.encode` under the hood.
 
@@ -177,6 +178,25 @@ def index = Action { implicit request =>{
 Resulting HTML:
 ```html
 <a href="https://www.google.com?q=blue%2Blight+blue">search</a>
+```
+
+### If Equals
+`if_equals` compare two objects and return the value if they are equal. 
+```html
+<ul>
+{{#each vote.options}}
+  <li><input type="radio" name="vote" value="{{@key}}" {{if_equals @key user.vote "checked"}}>{{this}}</li>
+{{/each}}
+</ul>
+```
+
+Resulting HTML:
+```html
+<ul>
+  <li><input type="radio" name="vote" value="one">first</li>
+  <li><input type="radio" name="vote" value="second" checked>second</li>
+  <li><input type="radio" name="vote" value="third">third</li>
+</ul>
 ```
 
 ### Scala Json Value Resolver
