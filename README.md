@@ -105,7 +105,7 @@ In Scala version with Json data flash variables automatically added to the jsonD
 ```scala
 Redirect(controllers.routes.HomeController.myForm()).flashing("success" -> "The document has been created") 
 ```
-Previous flash variables could extracted in a template as 
+Previous flash variable could be extracted in a template as 
 
 ```html
 <div>{{flash.success}}</div>
