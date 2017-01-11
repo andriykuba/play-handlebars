@@ -24,7 +24,7 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 
 1. Add the library in `built.sbt`
     ```scala
-    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.8" 
+    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.9" 
     ```
     
 2. Enable the module in `conf\application.conf`
@@ -100,6 +100,16 @@ class HomeController @Inject() (val handlebarsApi: HandlebarsApi)extends Control
 }
 ```
 
+In Scala version with Json data flash variables automatically added to the jsonData object.
+
+```scala
+Redirect(controllers.routes.HomeController.myForm()).flashing("success" -> "The document has been created") 
+```
+Previous flash variables could extracted in a template as 
+
+```html
+<div>{{flash.success}}</div>
+```
  
 ## Play helpers
 ### Assets
