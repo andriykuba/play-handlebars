@@ -44,9 +44,11 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 6. Configure `build.sbt` to take the templates folder in to the distribution package
     ```scala
     // Copy handlebars templates to the production
-    mappings in Universal ++=
-      (baseDirectory.value / "templates" * "*" get) map
-        (x => x -> ("templates/" + x.getName))
+    import Path.relativeTo
+    mappings in Universal ++= {
+      val basePath = (baseDirectory.value).get.head
+      ((baseDirectory.value / "templates" ** "*" get) pair relativeTo(basePath)) 
+    }
     ```
 
 ## Usage 
