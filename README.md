@@ -24,7 +24,7 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 
 1. Add the library in `built.sbt`
     ```scala
-    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.9" 
+    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.10" 
     ```
     
 2. Enable the module in `conf\application.conf`

@@ -4,10 +4,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.github.andriykuba.play.handlebars.HandlebarsApi;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
+import com.google.common.base.Splitter;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -28,6 +30,9 @@ public final class PlayHelpers {
   final LoadingCache<String, CharSequence> assetsRoutingCache;
 
   final MessagesApi messagesApi;
+  
+  final private static Splitter argumentsSplitter = 
+      Splitter.on(Pattern.compile(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
 
   /**
    * MessagesApi is a singleton so we can use it in helpers
@@ -219,14 +224,14 @@ public final class PlayHelpers {
       return new RouteMethodArguments(null, null);
     }
 
-    final String[] arguments = argumentsString.split(",");
+    final List<String> arguments = argumentsSplitter.splitToList(argumentsString);
 
     final List<Class<?>> types = new ArrayList<>();
     final List<Object> values = new ArrayList<>();
 
-    for (int i = 0; i < arguments.length; i++) {
+    for (String argument: arguments) {
       // Normalize argument
-      String argument = arguments[i].trim();
+      argument = argument.trim();
 
       if (argument.length() == 0) {
         // Empty argument is not allowed
