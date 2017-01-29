@@ -1,6 +1,9 @@
 package com.github.andriykuba.play.handlebars.helpers;
 
 import java.net.URLEncoder;
+import java.util.StringJoiner;
+
+import com.github.jknack.handlebars.Options;
 
 /**
  * Helpers for work with strings.
@@ -41,5 +44,26 @@ public final class StringHelpers {
     	return obj2 == null ? value.toString() : "";
     } 
     return obj1.equals(obj2) ? value.toString() : "";
+  }
+  
+  /**
+   * Take the string representations of the parameters and join them in to one string.
+   * 
+   * source: https://gist.github.com/ndemengel/b9fdd87011ebcc8be83b20820359bb5b
+   * 
+   * @param firstObjectToConcat  first object to concatenation
+   * @param options the next objects to concatenation
+   * @return resulting string
+   * @throws Exception
+   */
+  public static CharSequence concat(Object firstObjectToConcat, Options options) throws Exception {
+    StringJoiner joiner = new StringJoiner("");
+    joiner.add(String.valueOf(firstObjectToConcat));
+    
+    // all params except the first one
+    for (Object param : options.params) {
+        joiner.add(String.valueOf(param));
+    }
+    return joiner.toString();
   }
 }

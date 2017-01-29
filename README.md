@@ -18,13 +18,14 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 - [String Helpers](#string-helpers)  
   - [Encode url parameter](#encode-url-parameter)
   - [If equals](#if-equals)
+  - [Concat](#concat)
 - [Scala Json Value Resolver](#scala-json-value-resolver) 
 
 ## Install
 
 1. Add the library in `built.sbt`
     ```scala
-    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.10" 
+    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.11" 
     ```
     
 2. Enable the module in `conf\application.conf`
@@ -212,6 +213,22 @@ Resulting HTML:
   <li><input type="radio" name="vote" value="second" checked>second</li>
   <li><input type="radio" name="vote" value="third">third</li>
 </ul>
+```
+
+### Concat
+`concat` concatenate the string representation of the parameters in one string. 
+```html
+<div>{{concat "static" variable}} 
+```
+
+Resulting HTML:
+```html
+<div>static and some dynamic</div>
+```
+
+It useful to use in subexpressions
+```html
+<div>{{message (concat 'category.name.' category)}}</div>
 ```
 
 ## Scala Json Value Resolver
