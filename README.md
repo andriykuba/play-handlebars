@@ -24,10 +24,20 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
 ## Install
 
 1. Add the library in `built.sbt`
+
+    ### Play 2.6, Scala 2.12
+    
+    ```scala
+    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.6.3" 
+    ```
+
+    ### Play 2.5, Scala 2.11
+
     ```scala
     libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.5.11" 
     ```
-    
+
+        
 2. Enable the module in `conf\application.conf`
     ```scala
     play.modules.enabled += "com.github.andriykuba.play.handlebars.HandlebarsModule"

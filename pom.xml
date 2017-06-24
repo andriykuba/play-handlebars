@@ -7,7 +7,7 @@
 	<artifactId>play-handlebars</artifactId>
 	<packaging>jar</packaging>
 	<name>Handlebars templates for Play framework</name>
-	<version>2.5.11</version>
+	<version>2.6.3</version>
 	<description>Handlebars templates based on Java port of handlebars with special handlers for Play Framework</description>
 	<url>https://github.com/andriykuba/play-handlebars</url>
 
@@ -60,9 +60,9 @@
 	</repositories>
 
 	<properties>
-		<play.version>2.5.10</play.version>
+		<play.version>2.6.0</play.version>
 		<java.version>1.8</java.version>
-		<scala.binary.version>2.11</scala.binary.version>
+		<scala.binary.version>2.12</scala.binary.version>
 		<handlebars.version>4.0.6</handlebars.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -70,23 +70,29 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.typesafe.play</groupId>
-			<artifactId>play-java_2.11</artifactId>
+			<artifactId>play-java_2.12</artifactId>
 			<version>${play.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.typesafe.play</groupId>
-			<artifactId>play-cache_2.11</artifactId>
+			<artifactId>play-cache_2.12</artifactId>
 			<version>${play.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.typesafe.play</groupId>
-			<artifactId>play-json_2.11</artifactId>
+			<artifactId>play-json_2.12</artifactId>
 			<version>${play.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.typesafe.play</groupId>
+		    <artifactId>play-java-forms_2.12</artifactId>
+		    <version>${play.version}</version>
 		</dependency>
 
 		<dependency>
@@ -122,26 +128,26 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.5.5</version>
+			<version>2.8.47</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.22</version>
+			<version>1.7.25</version>
 			<scope>test</scope>
 		</dependency>  
 
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest_2.11</artifactId>
-			<version>3.0.1</version>
+			<artifactId>scalatest_2.12</artifactId>
+			<version>3.0.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.typesafe.play</groupId>
-			<artifactId>play-test_2.11</artifactId>
+			<artifactId>play-test_2.12</artifactId>
 			<version>${play.version}</version>
 			<scope>test</scope>
 		</dependency>

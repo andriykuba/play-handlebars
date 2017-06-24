@@ -18,6 +18,8 @@ public class HandlebarsTools {
 	private final static String MESSAGE_KEY_ERROR = "error";
 	private final static String MESSAGE_KEY_FORMS = "forms";
 
+	private HandlebarsTools(){}
+	
 	/**
 	 * Takes the errors from the {@link play.data.Form} and put them as keys in
 	 * to the map.

@@ -54,9 +54,8 @@ public final class StringHelpers {
    * @param firstObjectToConcat  first object to concatenation
    * @param options the next objects to concatenation
    * @return resulting string
-   * @throws Exception
    */
-  public static CharSequence concat(Object firstObjectToConcat, Options options) throws Exception {
+  public static CharSequence concat(Object firstObjectToConcat, Options options) {
     StringJoiner joiner = new StringJoiner("");
     joiner.add(String.valueOf(firstObjectToConcat));
     

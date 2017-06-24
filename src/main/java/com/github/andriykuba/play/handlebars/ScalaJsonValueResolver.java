@@ -29,7 +29,7 @@ public enum ScalaJsonValueResolver implements ValueResolver{
 	@Override
 	public Set<Map.Entry<String, Object>> propertySet(final Object context) {
 		if(context instanceof JsArray){
-			final Map<String, Object> result = new LinkedHashMap<String, Object>();
+			final Map<String, Object> result = new LinkedHashMap<>();
 			final List<Object> list = toJavaList((JsArray) context);
 			
 			int i = 0;
@@ -41,7 +41,7 @@ public enum ScalaJsonValueResolver implements ValueResolver{
 		}
 		
 		if(context instanceof JsObject){
-			Map<String, Object> result = new LinkedHashMap<String, Object>();
+			Map<String, Object> result = new LinkedHashMap<>();
 			
 			JsObject js = (JsObject) context;
 			scala.collection.Map<String, JsValue> values = js.value();
@@ -87,7 +87,7 @@ public enum ScalaJsonValueResolver implements ValueResolver{
     public Object resolveNullable(final Object context, final String key) {
 		if (context instanceof JsObject){
 			final scala.collection.Map<String, JsValue> map = 
-					((JsObject) context).play$api$libs$json$JsObject$$underlying();
+			    ((JsObject) context).underlying();
 			
 			final scala.Option<JsValue> option = map.get(key);
 			if(!SCALA_OPTION_NONE.equals(option)){
@@ -120,7 +120,7 @@ public enum ScalaJsonValueResolver implements ValueResolver{
 	}
 
 	 private Map<String, Object> toMap(final JsObject value) {
-		final scala.collection.Map<String, JsValue> map = value.play$api$libs$json$JsObject$$underlying();
+		final scala.collection.Map<String, JsValue> map = value.underlying();
 		
 	    return new AbstractMap<String, Object>() {
 

@@ -3,6 +3,7 @@ package com.github.andriykuba.play.handlebars.helpers;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -14,7 +15,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import play.api.Play;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.mvc.Call;
@@ -137,7 +137,7 @@ public final class PlayHelpers {
    */
   private static CharSequence loadRoute(final String action) throws Exception {
     // Trim the string to avoid nasty space mistakes.
-    final int signatureStart = action.indexOf("(");
+    final int signatureStart = action.indexOf('(');
     final String actionWithoutArguments = 
     		(signatureStart > 0 ? action.substring(0, signatureStart) : action).trim();
     		
@@ -152,7 +152,7 @@ public final class PlayHelpers {
     RouteMethodArguments methodArguments;
     if (signatureStart > 0) {
       // Possible arguments are present.
-      final String parametersString = action.substring(signatureStart + 1, action.lastIndexOf(")"));
+      final String parametersString = action.substring(signatureStart + 1, action.lastIndexOf(')'));
       methodArguments = parseMethodArguments(parametersString);
     } else {
       methodArguments = new RouteMethodArguments(null, null);
@@ -185,8 +185,8 @@ public final class PlayHelpers {
       final String methodName,
       final RouteMethodArguments methodArguments) throws Exception {
 
-    // Get the play class loader.
-    final ClassLoader classLoader = Play.classloader(Play.current());
+    // Get the class loader.   
+    final ClassLoader classLoader = PlayHelpers.class.getClassLoader();
 
     // Load the auto generated class "routes".
     final Class<?> routerClass = classLoader.loadClass(controllerPackage + ".routes");
@@ -202,9 +202,7 @@ public final class PlayHelpers {
     final Call invoke = (Call) routerMethod.invoke(object, methodArguments.values);
 
     // Get the URL of the action.
-    final String actionUrl = invoke.url();
-
-    return actionUrl;
+    return invoke.url();
   }
 
   /**
@@ -224,8 +222,13 @@ public final class PlayHelpers {
       return new RouteMethodArguments(null, null);
     }
 
-    final List<String> arguments = argumentsSplitter.splitToList(argumentsString);
+    final  Iterator<String> iterator = argumentsSplitter.split(argumentsString).iterator();
 
+    final List<String> arguments =  new ArrayList<String>();
+    while (iterator.hasNext()) {
+      arguments.add(iterator.next());
+    }
+    
     final List<Class<?>> types = new ArrayList<>();
     final List<Object> values = new ArrayList<>();
 
@@ -272,10 +275,10 @@ public final class PlayHelpers {
    */
   private static String resolveContextVariables(final String action, final Context context){
   	// Take the variable from the context
-	  final int start = action.indexOf("(");
+	  final int start = action.indexOf('(');
 	  if(start < 0) return action;
 	  
-	  final int end = action.lastIndexOf(")");
+	  final int end = action.lastIndexOf(')');
 	  final String argumentsString = action.substring(start + 1, end);
 	  final String actionPath = action.substring(0, start);
 	  
@@ -326,7 +329,7 @@ public final class PlayHelpers {
   private static String[] splitStringByLastDot(String string) {
     String[] splitted = new String[2];
 
-    final int point = string.lastIndexOf(".");
+    final int point = string.lastIndexOf('.');
 
     if (point < 0) {
       throw new RuntimeException("String \"" + string + "\" must contain dot");
