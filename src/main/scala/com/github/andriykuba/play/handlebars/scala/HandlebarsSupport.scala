@@ -10,8 +10,14 @@ import play.api.mvc.Flash
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json._
+import play.api.mvc.Request
+import play.api.mvc.AnyContent
+import play.api.i18n.I18nSupport
+import play.api.i18n.MessagesApi
+import play.api.i18n.I18nSupport._
 
 trait HandlebarsSupport {
+  
   def handlebarsApi: HandlebarsApi
   
   /**
@@ -21,7 +27,14 @@ trait HandlebarsSupport {
    * 
    * "{"flash":{"success":"The user has been created"}}
    */
-  def render(templateId: String, jsonData:JsObject)(implicit lang: Lang, flash: Flash): Content = {
+  def render(templateId: String, 
+             jsonData:JsObject)
+            (implicit request: Request[AnyContent], 
+             messagesApi: MessagesApi, 
+             flash: Flash): Content = {
+    
+    val lang = request.lang
+    
     if(flash.isEmpty){
       handlebarsApi.html(templateId, jsonData, lang.code)
     }else{

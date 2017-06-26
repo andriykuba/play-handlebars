@@ -28,7 +28,7 @@ This module is created for using [Handlebars](http://handlebarsjs.com/) template
     ### Play 2.6, Scala 2.12
     
     ```scala
-    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.6.3" 
+    libraryDependencies += "com.github.andriykuba" % "play-handlebars" % "2.6.7" 
     ```
 
     ### Play 2.5, Scala 2.11
