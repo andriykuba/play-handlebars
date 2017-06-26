@@ -15,6 +15,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
+import play.Environment;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.mvc.Call;
@@ -44,16 +45,23 @@ public final class PlayHelpers {
    * 	MessagesApi, used in the message helper.
    * @param assetsFinder
    *  AssetsFinder, used in the assets helper. 
+   * @param environment
+   *  Environment, used for getting class loader.
    */
-  public PlayHelpers(final MessagesApi messagesApi, final AssetsFinder assetsFinder) {
+  public PlayHelpers(
+      final MessagesApi messagesApi, 
+      final AssetsFinder assetsFinder, 
+      final Environment environment) {
     this.messagesApi = messagesApi;
     this.assetsFinder = assetsFinder;
+    
+    final ClassLoader classLoader = environment == null ? null : environment.classLoader(); 
     
     // Initialize the reverse router cache.
     reverseRoutingCache = CacheBuilder.newBuilder().build(
         new CacheLoader<String, CharSequence>() {
           public CharSequence load(String key) throws Exception {
-            return PlayHelpers.loadRoute(key);
+            return PlayHelpers.loadRoute(key, classLoader);
           }
         });
     
@@ -92,7 +100,8 @@ public final class PlayHelpers {
    * @throws Exception
    * 	Any exception in the case of resolving assets URL
    */
-  public static CharSequence loadAsset(final String path, final AssetsFinder assetsFinder) throws Exception {
+  public static CharSequence loadAsset(final String path, final AssetsFinder assetsFinder) 
+      throws Exception {
     return assetsFinder.path(path);
   }
 
@@ -127,7 +136,8 @@ public final class PlayHelpers {
    * @return
    * @throws Exception
    */
-  private static CharSequence loadRoute(final String action) throws Exception {
+  private static CharSequence loadRoute(final String action, final ClassLoader classLoader) 
+      throws Exception {
     // Trim the string to avoid nasty space mistakes.
     final int signatureStart = action.indexOf('(');
     final String actionWithoutArguments = 
@@ -151,7 +161,12 @@ public final class PlayHelpers {
     }
 
     // Return the action URL
-    return reverseUrl(classSplitment[0], classSplitment[1], methodName, methodArguments);
+    return reverseUrl(
+        classLoader, 
+        classSplitment[0], 
+        classSplitment[1], 
+        methodName, 
+        methodArguments);
   }
 
   /**
@@ -172,13 +187,11 @@ public final class PlayHelpers {
    * 	Any exception in the case of reversion
    */
   private static String reverseUrl(
+      final ClassLoader classLoader,
       final String controllerPackage,
       final String controllerClass,
       final String methodName,
       final RouteMethodArguments methodArguments) throws Exception {
-
-    // Get the class loader.   
-    final ClassLoader classLoader = PlayHelpers.class.getClassLoader();
 
     // Load the auto generated class "routes".
     final Class<?> routerClass = classLoader.loadClass(controllerPackage + ".routes");

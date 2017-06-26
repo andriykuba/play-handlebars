@@ -95,7 +95,7 @@ public class HandlebarsApi {
 		// Add helpers. 
 		// MessagesApi is a singleton so we can use it in helpers.
 		// All assets helpers will use this AssetsFinder.
-		PlayHelpers helpers = new PlayHelpers(messagesApi, assetsFinder);
+		PlayHelpers helpers = new PlayHelpers(messagesApi, assetsFinder, environment);
 		handlebars.registerHelpers(helpers);
 		handlebars.registerHelpers(StringHelpers.class);
 	}

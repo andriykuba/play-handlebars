@@ -17,6 +17,7 @@ import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
+import play.Environment;
 import play.api.libs.json.JsValue;
 import play.api.libs.json.Json;
 import play.i18n.MessagesApi;
@@ -30,8 +31,9 @@ public class HandlebarsApiTest {
 		Config config = ConfigFactory.load();
 		MessagesApi messagesApi = Mockito.mock(MessagesApi.class);
 		AssetsFinder assetsFinder = Mockito.mock(AssetsFinder.class);
+    Environment environment = Mockito.mock(Environment.class);
 		    
-		api = new HandlebarsApi(null, config, messagesApi, assetsFinder);
+		api = new HandlebarsApi(environment, config, messagesApi, assetsFinder);
 	}
 	
 	@Test
