@@ -18,6 +18,7 @@ import com.google.common.cache.LoadingCache;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.mvc.Call;
+import controllers.AssetsFinder;
 
 /**
  * Helpers specific for the Play.
@@ -30,19 +31,24 @@ public final class PlayHelpers {
   final LoadingCache<String, CharSequence> assetsRoutingCache;
 
   final MessagesApi messagesApi;
+  final AssetsFinder assetsFinder;
   
   final private static Splitter argumentsSplitter = 
       Splitter.on(Pattern.compile(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
 
   /**
-   * MessagesApi is a singleton so we can use it in helpers
+   * MessagesApi is a singleton so we can use it in helpers.
+   * Provided AssetsFinder will be used in in all assets helper
    * 
    * @param messagesApi
-   * 	MessagesApi, used in the message helpers
+   * 	MessagesApi, used in the message helper.
+   * @param assetsFinder
+   *  AssetsFinder, used in the assets helper. 
    */
-  public PlayHelpers(final MessagesApi messagesApi) {
+  public PlayHelpers(final MessagesApi messagesApi, final AssetsFinder assetsFinder) {
     this.messagesApi = messagesApi;
-
+    this.assetsFinder = assetsFinder;
+    
     // Initialize the reverse router cache.
     reverseRoutingCache = CacheBuilder.newBuilder().build(
         new CacheLoader<String, CharSequence>() {

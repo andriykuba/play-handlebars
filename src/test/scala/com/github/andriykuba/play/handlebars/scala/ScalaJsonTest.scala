@@ -13,6 +13,8 @@ import play.api.libs.json.Json
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
+import controllers.AssetsFinder;
+
 @RunWith(classOf[JUnitRunner])
 class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with MockitoSugar {
   var api: HandlebarsApi = _
@@ -21,8 +23,9 @@ class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with Mock
   before {
     val config = ConfigFactory.load();
 		val messagesApi = mock[MessagesApi]
+		val assetsFinder = mock[AssetsFinder];
 		
-		api = new HandlebarsApi(null, config, messagesApi)
+		api = new HandlebarsApi(null, config, messagesApi, assetsFinder)
   }
     
   "HandlebarsApi" should "work with scala code" in {

@@ -20,6 +20,7 @@ import com.typesafe.config.ConfigFactory;
 import play.api.libs.json.JsValue;
 import play.api.libs.json.Json;
 import play.i18n.MessagesApi;
+import controllers.AssetsFinder;
 
 public class HandlebarsApiTest {
 	private HandlebarsApi api;
@@ -28,8 +29,9 @@ public class HandlebarsApiTest {
 	public void initHandlebars(){
 		Config config = ConfigFactory.load();
 		MessagesApi messagesApi = Mockito.mock(MessagesApi.class);
-		
-		api = new HandlebarsApi(null, config, messagesApi);
+		AssetsFinder assetsFinder = Mockito.mock(AssetsFinder.class);
+		    
+		api = new HandlebarsApi(null, config, messagesApi, assetsFinder);
 	}
 	
 	@Test

@@ -25,6 +25,7 @@ import com.typesafe.config.Config;
 import play.Environment;
 import play.i18n.MessagesApi;
 import play.twirl.api.Content;
+import controllers.AssetsFinder;
 
 /**
  * Provide access to the handlebars template engine.
@@ -41,6 +42,9 @@ public class HandlebarsApi {
 
 	private final MessagesApi messagesApi;
 
+	private final AssetsFinder assetsFinder;
+	
+	
 	/**
 	 * Initialize Handlebars engine, register cache, handlers.
 	 * 
@@ -48,18 +52,22 @@ public class HandlebarsApi {
 	 *            Play environment, used for getting templates folder. 
 	 *            Could be null for the inline rendering.
 	 * @param config
-	 *            Play configuration, used for getting properties
+	 *            Play configuration, used for getting properties.
 	 * @param messagesApi
-	 *            MessagesApi, used in the message helpers
+	 *            MessagesApi, used in message helper.
+	 * @param assetsFinder
+	 *            AssetsFinder, used in assets helper.
 	 */
 	@Inject
 	public HandlebarsApi(
 			final Environment environment, 
 			final Config config,
-			final MessagesApi messagesApi) {
+			final MessagesApi messagesApi,
+			final AssetsFinder assetsFinder) {
 
 		this.messagesApi = messagesApi;
-
+		this.assetsFinder = assetsFinder;
+		
 		// Initialize the properties.
 		final Properties properties = new Properties(config);
 
@@ -86,7 +94,8 @@ public class HandlebarsApi {
 
 		// Add helpers. 
 		// MessagesApi is a singleton so we can use it in helpers.
-		PlayHelpers helpers = new PlayHelpers(messagesApi);
+		// All assets helpers will use this AssetsFinder.
+		PlayHelpers helpers = new PlayHelpers(messagesApi, assetsFinder);
 		handlebars.registerHelpers(helpers);
 		handlebars.registerHelpers(StringHelpers.class);
 	}
@@ -95,6 +104,10 @@ public class HandlebarsApi {
 		return messagesApi;
 	}
 	
+	public AssetsFinder getAssetsFinder() {
+	  return assetsFinder;
+	}
+	 
 	public Handlebars getHandlebars(){
 		return handlebars;
 	}
