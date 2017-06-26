@@ -2,7 +2,8 @@ package com.github.andriykuba.play.handlebars.scala
 
 import collection.mutable.Stack
 import org.scalatest._
-import play.Configuration
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import play.i18n.MessagesApi
 import org.mockito.Mockito._
 import com.github.andriykuba.play.handlebars.HandlebarsApi
@@ -18,10 +19,10 @@ class ScalaJsonTest extends FlatSpec with Matchers with BeforeAndAfter with Mock
   val languageCode = "da"
   
   before {
-    val configuration = mock[Configuration]
+    val config = ConfigFactory.load();
 		val messagesApi = mock[MessagesApi]
 		
-		api = new HandlebarsApi(null, configuration, messagesApi)
+		api = new HandlebarsApi(null, config, messagesApi)
   }
     
   "HandlebarsApi" should "work with scala code" in {

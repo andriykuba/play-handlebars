@@ -93,8 +93,9 @@
 		    <groupId>com.typesafe.play</groupId>
 		    <artifactId>play-java-forms_2.12</artifactId>
 		    <version>${play.version}</version>
+		    <scope>provided</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>com.github.jknack</groupId>
 			<artifactId>handlebars</artifactId>
@@ -186,6 +187,26 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+			  <artifactId>maven-shade-plugin</artifactId>
+			  <version>3.0.0</version>
+			  <executions>
+			    <execution>
+			      <phase>package</phase>
+			      <goals>
+			        <goal>shade</goal>
+			      </goals>
+			      <configuration>
+			        <transformers>
+			          <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+			            <resource>reference.conf</resource>
+			          </transformer>
+			        </transformers>
+			      </configuration>
+			    </execution>
+			  </executions>
 			</plugin>
 
 			<plugin>

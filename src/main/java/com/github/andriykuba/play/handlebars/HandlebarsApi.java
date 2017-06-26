@@ -20,9 +20,8 @@ import com.github.jknack.handlebars.io.TemplateLoader;
 import com.github.jknack.handlebars.io.TemplateSource;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableMap;
 
-import play.Configuration;
+import com.typesafe.config.Config;
 import play.Environment;
 import play.i18n.MessagesApi;
 import play.twirl.api.Content;
@@ -48,7 +47,7 @@ public class HandlebarsApi {
 	 * @param environment
 	 *            Play environment, used for getting templates folder. 
 	 *            Could be null for the inline rendering.
-	 * @param configuration
+	 * @param config
 	 *            Play configuration, used for getting properties
 	 * @param messagesApi
 	 *            MessagesApi, used in the message helpers
@@ -56,13 +55,13 @@ public class HandlebarsApi {
 	@Inject
 	public HandlebarsApi(
 			final Environment environment, 
-			final Configuration configuration,
+			final Config config,
 			final MessagesApi messagesApi) {
 
 		this.messagesApi = messagesApi;
 
 		// Initialize the properties.
-		final Properties properties = new Properties(configuration);
+		final Properties properties = new Properties(config);
 
 		// Get the template folder.
 		final File rootFolder = 
@@ -178,41 +177,27 @@ public class HandlebarsApi {
 		final static String EXTENSION = "extension";
 		final static String IS_CASHE_ENABLED = "isCacheEnabled";
 
-		/* Defaults */
-		final static String DEFAULT_DIRECTORY = "/templates";
-		final static String DEFAULT_EXTENSION = ".hbs";
-		final static Boolean DEFAULT_IS_CASHE_ENABLED = true;
-
 		/**
 		 * the handlebars configuration.
 		 */
-		private Configuration configuration;
+		private Config config;
 
-		Properties(final Configuration configuration) {
-			this.configuration = configuration.getConfig(Properties.ROOT);
-			if (this.configuration == null) {
-				final ImmutableMap<String, Object> defaultConfig = ImmutableMap.<String, Object>builder()
-						.put(DIRECTORY, DEFAULT_DIRECTORY)
-						.put(EXTENSION, DEFAULT_EXTENSION)
-						.put(IS_CASHE_ENABLED, DEFAULT_IS_CASHE_ENABLED)
-						.build();
-
-				this.configuration = new Configuration(defaultConfig);
-			}
+		Properties(final Config config) {
+			this.config = config.getConfig(Properties.ROOT);
 		}
 
 		/**
 		 * @return status of the cache.
 		 */
 		boolean isCacheEnabled() {
-			return configuration.getBoolean(IS_CASHE_ENABLED, DEFAULT_IS_CASHE_ENABLED);
+			return config.getBoolean(IS_CASHE_ENABLED);
 		}
 
 		/**
 		 * @return the directory of the templates.
 		 */
 		String getDirectory() {
-			return configuration.getString(DIRECTORY, DEFAULT_DIRECTORY);
+			return config.getString(DIRECTORY);
 		}
 
 		/**
@@ -220,7 +205,7 @@ public class HandlebarsApi {
 		 *         directory.
 		 */
 		String getExtension() {
-			return configuration.getString(EXTENSION, DEFAULT_EXTENSION);
+			return config.getString(EXTENSION);
 		}
 
 	}

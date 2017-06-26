@@ -14,7 +14,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableMap;
 
-import play.Configuration;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
 import play.api.libs.json.JsValue;
 import play.api.libs.json.Json;
 import play.i18n.MessagesApi;
@@ -24,10 +26,10 @@ public class HandlebarsApiTest {
 	private final static String LANGUAGE_CODE = "da";
 	@Before
 	public void initHandlebars(){
-		Configuration configuration = Mockito.mock(Configuration.class);
+		Config config = ConfigFactory.load();
 		MessagesApi messagesApi = Mockito.mock(MessagesApi.class);
 		
-		api = new HandlebarsApi(null, configuration, messagesApi);
+		api = new HandlebarsApi(null, config, messagesApi);
 	}
 	
 	@Test
