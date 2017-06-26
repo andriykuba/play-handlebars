@@ -61,7 +61,7 @@ public final class PlayHelpers {
     assetsRoutingCache = CacheBuilder.newBuilder().build(
         new CacheLoader<String, CharSequence>() {
           public CharSequence load(String key) throws Exception {
-            return PlayHelpers.loadAsset(key);
+            return PlayHelpers.loadAsset(key, assetsFinder);
           }
         });
   }
@@ -83,31 +83,17 @@ public final class PlayHelpers {
   /**
    * Called by the cache loader. Do the same as {@link #asset(String) asset} 
    * 
-   * @param url
-   * 	Inner URL of the assets
+   * @param path
+   * 	Path of the assets
+   * @param assetsFinder
+   *  AssetsFinder to find assets
    * @return
    * 	Real URL of the assets
    * @throws Exception
    * 	Any exception in the case of resolving assets URL
    */
-  public static CharSequence loadAsset(final String url) throws Exception {
-    /*-
-     * This code is good only if "aggregateReverseRoutes" is configured 
-     * 
-     *     Assets assets = new controllers.Assets.Asset(url)); 
-     *     return controllers.routes.Assets.versioned(assets).toString(); 
-     *     
-     * So it was done the same but with reflection, it works in both cases 
-     * as with "aggregateReverseRoutes" as without.
-     */
-
-    return reverseUrl(
-        "controllers",
-        "Assets",
-        "versioned",
-        new RouteMethodArguments(
-            new Class[] { controllers.Assets.Asset.class },
-            new Object[] { new controllers.Assets.Asset(url) }));
+  public static CharSequence loadAsset(final String path, final AssetsFinder assetsFinder) throws Exception {
+    return assetsFinder.path(path);
   }
 
   /**
